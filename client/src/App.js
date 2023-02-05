@@ -10,6 +10,7 @@ import { themeSettings } from "./theme";
 
 function App() {
   const mode = useSelector((state) => state.mode);
+  const {_id} = useSelector((state) => state.user);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
   const isAuth = Boolean(useSelector((state) => state.token));
 
@@ -26,7 +27,7 @@ function App() {
             />
             <Route
               path="/profile/:userId"
-              element={isAuth ? <ProfilePage /> : <Navigate to="/" />}
+              element={isAuth ? <ProfilePage loggedInUser={_id}/> : <Navigate to="/" />}
             />
           </Routes>
         </ThemeProvider>

@@ -14,9 +14,9 @@ export const getUser = async (req, res) => {
 export const getUserFriends = async (req, res) => {
     try {
         const { id } = req.params;
-        const user = User.findById(id);
+        const user = await User.findById(id);
 
-        const friends = await Prmoise.all(
+        const friends = await Promise.all(
             user.friends.map((id) => User.findById(id))
         );
 
@@ -51,7 +51,7 @@ export const addRemoveFriend = async (req, res) => {
         await user.save();
         await friend.save();
 
-        const friends = await Prmoise.all(
+        const friends = await Promise.all(
             user.friends.map((id) => User.findById(id))
         );
 
